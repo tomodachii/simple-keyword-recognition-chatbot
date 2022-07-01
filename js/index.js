@@ -27,7 +27,9 @@ const random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
 
 function makeResponse(input) {
   let responseArr = checkInput(input);
-  if (responseArr) return responseArr[random(0, responseArr.length)];
+  if (responseArr) {
+    return responseArr[random(0, responseArr.length)];
+  }
   return "";
 }
 
@@ -39,7 +41,21 @@ function handleInput() {
   if (input.length > 0) {
     displayChatBubble(input, "user");
     let response = makeResponse(input);
-    if (response) displayChatBubble(response, "bot");
+    if (response) {
+      if (Array.isArray(response)) {
+        let animationCounter = 1;
+        let animationBubbleDelay = 400;
+        for (let i in response) {
+          displayChatBubble(response[i], "bot");
+          chatList.lastElementChild.style.animationDelay =
+            animationCounter * animationBubbleDelay + "ms";
+          animationCounter++;
+          chatList.lastElementChild.style.animationPlayState = "running";
+        }
+      } else {
+        displayChatBubble(response, "bot");
+      }
+    }
   }
   textInput.value = "";
 }

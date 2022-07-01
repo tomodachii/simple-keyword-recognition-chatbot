@@ -96,6 +96,10 @@ body {
     animation-iteration-count: 1;
     animation-play-state: running;
     animation-fill-mode: forwards;
+
+    a {
+      text-decoration: none;
+    }
   }
   .user__input {
     background-color: #CEECF5;
@@ -173,6 +177,17 @@ body {
   .chatbox__container {
     display: flex;
     justify-content: center;
+    align-items: center;
+
+    #kitty {
+      height: 2rem;
+      width: 2rem;
+      margin-right: 0.5rem;
+    }
+
+    .submit-button {
+      height: 3rem;
+    }
   }
 
   @media screen and(max-width: 29em) {

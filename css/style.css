@@ -80,6 +80,9 @@ body {
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards;
 }
+.chatlist .user__input a, .chatlist .bot__output a {
+  text-decoration: none;
+}
 .chatlist .user__input {
   background-color: #CEECF5;
   text-transform: lowercase;
@@ -158,6 +161,15 @@ body {
 #chatform .chatbox__container {
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+#chatform .chatbox__container #kitty {
+  height: 2rem;
+  width: 2rem;
+  margin-right: 0.5rem;
+}
+#chatform .chatbox__container .submit-button {
+  height: 3rem;
 }
 @media screen and (max-width: 29em) {
   #chatform {
