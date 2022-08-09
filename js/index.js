@@ -3,6 +3,10 @@ import script from "./script.js";
 // The form we receive user input from
 let chatForm = document.querySelector("#chatform");
 let chatList = document.querySelector(".chatlist");
+let currentWeight = 0;
+let currentIntent = "";
+let tempIntent = "";
+let isReaction = false;
 
 // The sender should be "user" or "bot"
 function displayChatBubble(message, sender) {
@@ -14,9 +18,43 @@ function displayChatBubble(message, sender) {
   chatList.scrollTop = chatList.scrollHeight;
 }
 
+// function isYesNoAnswer() {
+//   if
+// }
+
 function checkInput(input) {
+  if ((input == "có" || input.indexOf("có") >= 0) && tempIntent) {
+    for (let keyword in script) {
+      if (
+        script[keyword].intent === tempIntent &&
+        script[keyword].weight == 0
+      ) {
+        currentWeight = script[keyword].weight;
+        currentIntent = script[keyword].intent.slice();
+        return script[keyword].responses;
+      }
+    }
+  }
+  if (input == "không" && tempIntent) {
+    return ["Okay ..."];
+  }
   for (let keyword in script) {
     if (input.indexOf(keyword) >= 0) {
+      if (
+        script[keyword].intent != currentIntent &&
+        script[keyword].weight != 0
+      ) {
+        tempIntent = script[keyword].intent.slice();
+        return [
+          `Xin lỗi tôi không hiểu ngữ cảnh! Có phải bạn muốn hỏi về ${script[keyword].intent}?`,
+        ];
+      } else {
+        if (script[keyword].weight > currentWeight + 1) {
+          return [`Xin cung cấp thêm thông tin về ${script[keyword].intent}!!`];
+        }
+      }
+      currentWeight = script[keyword].weight;
+      currentIntent = script[keyword].intent.slice();
       return script[keyword].responses;
     }
   }
